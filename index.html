@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽籤工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 90%;
+            max-width: 400px;
+        }
+        #countdown {
+            font-size: 24px;
+            color: red;
+            margin-top: 10px;
+        }
+        #result {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .group {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 90%;
+            max-width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        .group.visible {
+            opacity: 1;
+        }
+        .group.silver {
+            background-color: silver; /* 銀器組背景設為銀色 */
+            color: black;
+        }
+        .group h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .group ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #timestamp {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+        @media (max-width: 768px) {
+            body {
+                margin: 10px;
+            }
+            input, button {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .group h3 {
+                font-size: 16px;
+            }
+            .group {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>墨賞忠孝店盤點抽籤</h1>
+    <p>輸入名字并以（/）隔開。</p>
+    <p>（例：Jerry/Bacon/Eddy/Rita）</p>
+    <label>名字:</label><input type="text" id="nameInput" placeholder="輸入名字并以（/）隔開">
+    <br>
+    <label>銀器:</label><input type="number" id="silverGroups" placeholder="輸入組數" min="1">
+    <br>
+    <label>瓷器:</label><input type="number" id="ceramicGroups" placeholder="輸入組數" min="1">
+    <br>
+    <button id="groupButton">開始分組</button>
+    <div id="countdown"></div>
+    <div id="result"></div>
+    <div id="timestamp"></div>
+
+    <script>
+        document.getElementById('groupButton').addEventListener('click', startCountdown);
+
+        function startCountdown() {
+            const nameInput = document.getElementById('nameInput').value.trim();
+            const silverGroups = parseInt(document.getElementById('silverGroups').value);
+            const ceramicGroups = parseInt(document.getElementById('ceramicGroups').value);
+
+            // 檢查輸入是否正確
+            if (!nameInput || isNaN(silverGroups) || isNaN(ceramicGroups) || silverGroups < 1 || ceramicGroups < 1) {
+                alert('請輸入名字並正確設定銀器和瓷器組數！');
+                return;
+            }
+
+            // 倒數計時
+            let countdown = 3;
+            const countdownDiv = document.getElementById('countdown');
+            countdownDiv.textContent = `倒數 ${countdown} 秒...`;
+
+            const interval = setInterval(() => {
+                countdown--;
+                countdownDiv.textContent = `倒數 ${countdown} 秒...`;
+
+                if (countdown === 0) {
+                    clearInterval(interval);
+                    countdownDiv.textContent = '';
+                    startGrouping(nameInput, silverGroups, ceramicGroups);
+                }
+            }, 1000);
+        }
+
+        function startGrouping(nameInput, silverGroups, ceramicGroups) {
+            const names = nameInput.split('/').map(name => name.trim());
+
+            // 隨機打亂名字順序
+            for (let i = names.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [names[i], names[j]] = [names[j], names[i]];
+            }
+
+            // 平均分配到銀器組和瓷器組
+            const totalGroups = silverGroups + ceramicGroups;
+            const dividedGroups = divideEvenly(names, totalGroups);
+
+            // 分割銀器組和瓷器組
+            const silverResult = dividedGroups.slice(0, silverGroups);
+            const ceramicResult = dividedGroups.slice(silverGroups);
+
+            displayResult(silverResult, ceramicResult);
+        }
+
+        function divideEvenly(names, groupCount) {
+            const groups = Array.from({ length: groupCount }, () => []);
+            names.forEach((name, index) => {
+                groups[index % groupCount].push(name);
+            });
+            return groups;
+        }
+
+        function displayResult(silverGroups, ceramicGroups) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            // 顯示銀器組
+            silverGroups.forEach((group, index) => {
+                const groupDiv = document.createElement('div');
+                groupDiv.classList.add('group', 'silver'); // 添加銀色樣式
+                groupDiv.innerHTML = `<h3>銀器組 ${index + 1}</h3>`;
+                const ul = document.createElement('ul');
+                group.forEach(name => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+                    ul.appendChild(li);
+                });
+                groupDiv.appendChild(ul);
+                resultDiv.appendChild(groupDiv);
+            });
+
+            // 顯示瓷器組
+            ceramicGroups.forEach((group, index) => {
+                const groupDiv = document.createElement('div');
+                groupDiv.classList.add('group');
+                groupDiv.innerHTML = `<h3>瓷器組 ${index + 1}</h3>`;
+                const ul = document.createElement('ul');
+                group.forEach(name => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+                    ul.appendChild(li);
+                });
+                groupDiv.appendChild(ul);
+                resultDiv.appendChild(groupDiv);
+            });
+
+            // 逐個顯示效果
+            const groupDivs = document.querySelectorAll('.group');
+            groupDivs.forEach((groupDiv, index) => {
+                setTimeout(() => {
+                    groupDiv.classList.add('visible');
+                }, index * 1000);
+            });
+
+            // 顯示抽籤時間
+            const timestampDiv = document.getElementById('timestamp');
+            const now = new Date();
+            const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+            timestampDiv.textContent = `抽籤時間：${formattedTime}`;
+        }
+    </script>
+</body>
+</html>
