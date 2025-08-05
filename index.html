@@ -4,294 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>墨賞忠孝店盤點抽籤工具</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABfUlEQVR4AWIgFgQwhCgAsQEDOeDG8ZsKAEbJGS64KIzDy2dUS5pbsm3btm3btm3bdi2Z+9A+3X17O//sGp57D58Xv1Pv1bDtyetDTOL7lWjVfgKB04uVC9vscjfDdrVhlSosy8jxuyuHbD4TUKxYHNXYVdF41jgxwfb++D7mlKKQiixiPxNc3QvA8dwJbbRucBjnaOV8SWCLeu8FSL/RtR5jytbIRgl8bzWKj6HLkL2TdJeYFFOGagbVu9cT6weg3d7d6pfRYhnbg0mDHCJdrF6i5iuGb75hwXljYAvmhL2+mF6CpNKxahqNfGgYQLT7lIeThwig69NlMwTBTNE0YQ9rrn88cAf4QnDOINSMBoEC/XzC4VbfFqq0rqCusM4HeaBwMC4+cJ+F7h22jFzgJxyUu9G++dB5/FFCtVP1U8H5R68vF/WitEiRqAcByvnq8+UgSJBOJLd/nrFzpbMc3gMa/FUBLVYv4unS9dCiWYFYAwzSFbMSQPmCgZYAABOXMT3Bh0COAAAAAElFTkSuQmCC">
+
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Microsoft JhengHei', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
-        
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1000px;
+            width: 100%;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             overflow: hidden;
+            margin: 0 auto;
         }
-        
         .header {
             background: linear-gradient(135deg, #500054 0%, #630367 100%);
             color: white;
-            padding: 40px 20px;
+            padding: 30px;
             text-align: center;
         }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 300;
+        .header h1 { font-size: 2.2em; margin-bottom: 10px; }
+        .input-section { 
+            padding: 30px; 
+            background: #f8f9fa; 
+            text-align: center;
         }
-        
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
+        .form-group { 
+            margin-bottom: 20px; 
+            text-align: center;
         }
-        
-        .input-section {
-            padding: 40px 20px;
-            background: #f8f9fa;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #495057;
-            font-size: 16px;
+            text-align: center;
         }
-        
         .form-group input {
             width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
+            max-width: 500px;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
-            transform: translateY(-2px);
-        }
-        
-        .input-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .btn-container {
             text-align: center;
-            margin-top: 30px;
+            margin: 0 auto;
+            display: block;
         }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,123,255,0.4);
-        }
-        
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin: 0 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
-        
-        #countdown {
-            font-size: 3em;
-            font-weight: bold;
-            color: #dc3545;
-            margin: 30px 0;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            animation: pulse 1s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .result-section {
-            padding: 40px 20px;
-            background: white;
-        }
-        
-        .result-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .result-header h2 {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .stats {
-            display: flex;
+        .input-row { 
+            display: flex; 
+            gap: 15px; 
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
+            align-items: center;
             flex-wrap: wrap;
         }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 15px 25px;
-            border-radius: 10px;
-            text-align: center;
-            border-left: 4px solid #007bff;
+        .input-row .form-group { 
+            flex: 1; 
+            min-width: 200px;
+            max-width: 250px;
         }
-        
-        .stat-number {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #007bff;
-        }
-        
-        .stat-label {
-            font-size: 0.9em;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-        
-        #result {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .group {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-        
-        .group.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .group.silver {
-            border-left: 6px solid #6c757d;
-        }
-        
-        .group.ceramic {
-            border-left: 6px solid #28a745;
-        }
-        
-        .group h3 {
-            margin-bottom: 20px;
-            font-size: 1.3em;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .group.silver h3::before {
-            content: "🍴";
-            font-size: 1.2em;
-        }
-        
-        .group.ceramic h3::before {
-            content: "🏺";
-            font-size: 1.2em;
-        }
-        
-        .group ul {
-            list-style: none;
-        }
-        
-        .group li {
-            padding: 10px 15px;
-            margin-bottom: 8px;
-            background: #f8f9fa;
+        .btn {
+            padding: 12px 25px;
+            border: none;
             border-radius: 8px;
-            border-left: 3px solid #007bff;
-            font-weight: 500;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
             transition: all 0.3s ease;
         }
-        
-        .group li:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
+        .btn-primary {
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
         }
-        
-        #timestamp {
-            margin-top: 40px;
+        .btn-primary:hover { background: #0056b3; transform: translateY(-2px); }
+        .btn-primary:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #545b62; transform: translateY(-2px); }
+        .btn-container { text-align: center; margin: 20px 0; }
+        .quick-fill { text-align: center; margin-top: 10px; }
+        #countdown {
+            font-size: 4em;
+            color: #dc3545;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .loading {
             text-align: center;
             padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            font-size: 16px;
-            color: #495057;
-            border: 1px solid #dee2e6;
-        }
-        
-        .quick-fill {
-            margin-top: 15px;
-            text-align: center;
-        }
-        
-        .quick-fill span {
-            color: #6c757d;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-        
-        .loading {
             display: none;
-            text-align: center;
-            margin: 20px 0;
         }
-        
         .spinner {
             width: 40px;
             height: 40px;
@@ -299,78 +119,187 @@
             border-top: 4px solid #007bff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
         }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #dc3545;
+        .result-section {
+            padding: 30px;
+            background: white;
             display: none;
+            text-align: center;
+        }
+        .result-header { 
+            text-align: center; 
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .result-header.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .result-header h2 { font-size: 2em; color: #333; margin-bottom: 15px; }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #007bff;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        .stat-item.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .stat-number { font-size: 1.5em; font-weight: bold; color: #007bff; }
+        .stat-label { font-size: 0.9em; color: #666; margin-top: 5px; }
+        #result {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+            justify-items: center;
+        }
+        .group {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        .group.show { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+        }
+        .group.silver { border-left: 5px solid #6c757d; }
+        .group.ceramic { border-left: 5px solid #28a745; }
+        .group h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+            text-align: center;
+        }
+        .group.silver h3::before { content: "🍴 "; }
+        .group.ceramic h3::before { content: "🏺 "; }
+        .group ul { 
+            list-style: none; 
+            text-align: center;
+        }
+        .group li {
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #007bff;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.5s ease;
+            text-align: center;
+        }
+        .group li.show { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+        .group li:hover {
+            background: #e9ecef;
+            transform: translateX(0) scale(1.05);
+        }
+        .message {
+            padding: 12px;
+            border-radius: 5px;
+            margin: 10px auto;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        .error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        #timestamp {
+            margin: 30px auto;
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #666;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            max-width: 600px;
+        }
+        #timestamp.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .result-buttons {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            text-align: center;
+        }
+        .result-buttons.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .completion-message {
+            margin: 30px auto;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            max-width: 600px;
+        }
+        .completion-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .completion-message::before {
+            content: "🎉 ";
+            font-size: 1.5em;
         }
         
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #28a745;
-            display: none;
-        }
-        
+        /* 響應式設計 */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
+            .container {
+                margin: 0 10px;
             }
-            
             .input-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
                 flex-direction: column;
-                align-items: center;
             }
-            
+            .input-row .form-group {
+                max-width: 100%;
+            }
             #result {
                 grid-template-columns: 1fr;
             }
-            
-            #countdown {
-                font-size: 2.5em;
-            }
-            
-            .container {
-                margin: 10px;
-                border-radius: 15px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .header {
-                padding: 30px 15px;
-            }
-            
-            .input-section, .result-section {
-                padding: 30px 15px;
-            }
-            
-            .btn-primary {
-                width: 100%;
-                padding: 15px;
+            .stats {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
@@ -388,28 +317,27 @@
                 <input type="text" id="nameInput" placeholder="請輸入名字並以 / 分隔，例：Jerry/Bacon/Eddy/Rita">
                 <div class="quick-fill">
                     <span>快速填入：</span>
-                    <button class="btn-secondary" onclick="quickFill('Jerry/Bacon/Eddy/Rita/JoJo/Jasper/Amanda/Hank')">範例名單</button>
-                    <button class="btn-secondary" onclick="clearInput()">清空</button>
+                    <button class="btn btn-secondary" onclick="quickFill()">範例名單</button>
+                    <button class="btn btn-secondary" onclick="clearInput()">清空</button>
                 </div>
             </div>
             
             <div class="input-row">
                 <div class="form-group">
                     <label for="silverGroups">🍴 銀器組數</label>
-                    <input type="number" id="silverGroups" placeholder="輸入銀器組數" min="1" max="10" value="2">
+                    <input type="number" id="silverGroups" min="1" max="10" value="2">
                 </div>
-                
                 <div class="form-group">
                     <label for="ceramicGroups">🏺 瓷器組數</label>
-                    <input type="number" id="ceramicGroups" placeholder="輸入瓷器組數" min="1" max="10" value="2">
+                    <input type="number" id="ceramicGroups" min="1" max="10" value="2">
                 </div>
             </div>
             
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
+            <div id="errorMessage" class="message error"></div>
+            <div id="successMessage" class="message success"></div>
             
             <div class="btn-container">
-                <button class="btn-primary" id="groupButton">🎲 開始抽籤分組</button>
+                <button class="btn btn-primary" id="startBtn" onclick="startLottery()">🎲 開始抽籤分組</button>
             </div>
             
             <div class="loading" id="loading">
@@ -420,308 +348,321 @@
         
         <div id="countdown"></div>
         
-        <div class="result-section" id="resultSection" style="display: none;">
-            <div class="result-header">
+        <div class="result-section" id="resultSection">
+            <div class="result-header" id="resultHeader">
                 <h2>🎊 抽籤結果</h2>
                 <div class="stats" id="stats"></div>
             </div>
-            
             <div id="result"></div>
             <div id="timestamp"></div>
-            
-            <div class="btn-container" style="margin-top: 30px;">
-                <button class="btn-primary" onclick="resetLottery()">🔄 重新抽籤</button>
-                <button class="btn-secondary" onclick="exportResults()" style="margin-left: 10px;">📋 複製結果</button>
+            <div class="btn-container result-buttons" id="resultButtons">
+                <button class="btn btn-primary" onclick="resetLottery()">🔄 重新抽籤</button>
+                <button class="btn btn-secondary" onclick="exportResults()">📋 複製結果</button>
+            </div>
+            <div class="completion-message" id="completionMessage">
+                抽籤完成！祝大家盤點順利！
             </div>
         </div>
     </div>
-    
+
     <script>
         let currentResults = null;
-        
-        document.getElementById('groupButton').addEventListener('click', startCountdown);
-        
-        // 輸入驗證
-        document.getElementById('nameInput').addEventListener('input', validateInput);
-        document.getElementById('silverGroups').addEventListener('input', validateInput);
-        document.getElementById('ceramicGroups').addEventListener('input', validateInput);
-        
-        function validateInput() {
+
+        function showError(msg) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 4000);
+        }
+
+        function showSuccess(msg) {
+            const el = document.getElementById('successMessage');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3000);
+        }
+
+        function quickFill() {
+            document.getElementById('nameInput').value = 'Jerry/Bacon/Eddy/Rita/JoJo/Jasper/Amanda/Hank';
+            showSuccess('已填入範例名單！');
+        }
+
+        function clearInput() {
+            document.getElementById('nameInput').value = '';
+        }
+
+        function startLottery() {
             const nameInput = document.getElementById('nameInput').value.trim();
             const silverGroups = parseInt(document.getElementById('silverGroups').value);
             const ceramicGroups = parseInt(document.getElementById('ceramicGroups').value);
-            const button = document.getElementById('groupButton');
-            
-            if (nameInput && !isNaN(silverGroups) && !isNaN(ceramicGroups) && 
-                silverGroups >= 1 && ceramicGroups >= 1) {
-                button.disabled = false;
-            } else {
-                button.disabled = true;
-            }
-        }
-        
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-            }, 5000);
-        }
-        
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            setTimeout(() => {
-                successDiv.style.display = 'none';
-            }, 3000);
-        }
-        
-        function startCountdown() {
-            const nameInput = document.getElementById('nameInput').value.trim();
-            const silverGroups = parseInt(document.getElementById('silverGroups').value);
-            const ceramicGroups = parseInt(document.getElementById('ceramicGroups').value);
-            
-            // 詳細驗證
+
             if (!nameInput) {
                 showError('請輸入參與人員名單！');
                 return;
             }
-            
-            const names = nameInput.split('/').map(name => name.trim()).filter(name => name);
+
+            const names = nameInput.split('/').map(n => n.trim()).filter(n => n);
             if (names.length < 2) {
                 showError('至少需要2個人才能進行分組！');
                 return;
             }
-            
-            if (isNaN(silverGroups) || isNaN(ceramicGroups) || silverGroups < 1 || ceramicGroups < 1) {
-                showError('請正確設定銀器和瓷器組數！');
+
+            if (silverGroups < 1 || ceramicGroups < 1) {
+                showError('組數必須大於0！');
                 return;
             }
+
+            // 重置所有動畫狀態
+            resetAnimations();
             
-            if (silverGroups > names.length || ceramicGroups > names.length) {
-                showError('組數不能超過總人數！');
-                return;
-            }
-            
-            // 隱藏結果區域
             document.getElementById('resultSection').style.display = 'none';
-            document.getElementById('groupButton').disabled = true;
-            
-            // 開始倒數計時
-            let countdown = 5;
-            const countdownDiv = document.getElementById('countdown');
-            countdownDiv.textContent = countdown;
-            countdownDiv.style.display = 'block';
-            
-            const interval = setInterval(() => {
-                countdown--;
-                countdownDiv.textContent = countdown;
-                
-                if (countdown === 0) {
-                    clearInterval(interval);
-                    countdownDiv.style.display = 'none';
-                    showLoading();
+            document.getElementById('startBtn').disabled = true;
+
+            // 倒數計時
+            let count = 5;
+            const countdownEl = document.getElementById('countdown');
+            countdownEl.style.display = 'block';
+            countdownEl.textContent = count;
+
+            // 滾動到倒數計時
+            countdownEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            const timer = setInterval(() => {
+                count--;
+                countdownEl.textContent = count;
+                if (count === 0) {
+                    clearInterval(timer);
+                    countdownEl.style.display = 'none';
                     
-                    // 模擬處理時間
+                    // 顯示載入
+                    document.getElementById('loading').style.display = 'block';
+                    
                     setTimeout(() => {
-                        hideLoading();
-                        startGrouping(nameInput, silverGroups, ceramicGroups);
-                    }, 2000);
+                        document.getElementById('loading').style.display = 'none';
+                        performLottery(names, silverGroups, ceramicGroups);
+                    }, 1500);
                 }
             }, 1000);
         }
-        
-        function showLoading() {
-            document.getElementById('loading').style.display = 'block';
+
+        function resetAnimations() {
+            // 移除所有show類別
+            document.querySelectorAll('.show').forEach(el => {
+                el.classList.remove('show');
+            });
         }
-        
-        function hideLoading() {
-            document.getElementById('loading').style.display = 'none';
-        }
-        
-        function startGrouping(nameInput, silverGroups, ceramicGroups) {
-            const names = nameInput.split('/').map(name => name.trim()).filter(name => name);
-            
-            // 使用更好的隨機算法 (Fisher-Yates)
-            const shuffledNames = [...names];
-            for (let i = shuffledNames.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledNames[i], shuffledNames[j]] = [shuffledNames[j], shuffledNames[i]];
-            }
-            
-            // 更智能的分配策略
-            const silverCount = Math.ceil(shuffledNames.length / 2);
-            const silverNames = shuffledNames.slice(0, silverCount);
-            const ceramicNames = shuffledNames.slice(silverCount);
-            
-            // 平均分配
-            const silverResult = divideEvenly(silverNames, silverGroups);
-            const ceramicResult = divideEvenly(ceramicNames, ceramicGroups);
-            
-            currentResults = {
-                silver: silverResult.groups,
-                ceramic: ceramicResult.groups,
-                totalPeople: names.length,
-                silverPeople: silverNames.length,
-                ceramicPeople: ceramicNames.length
-            };
-            
-            displayResult(silverResult.groups, ceramicResult.groups);
-            showSuccess('抽籤分組完成！');
-        }
-        
-        function divideEvenly(names, groupCount) {
-            const groups = Array.from({ length: groupCount }, () => []);
-            
-            // 先隨機排序
+
+        function performLottery(names, silverGroups, ceramicGroups) {
+            // 洗牌
             const shuffled = [...names];
             for (let i = shuffled.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
-            
-            // 輪流分配以確保平均
-            shuffled.forEach((name, index) => {
+
+            // 分配人員
+            const silverCount = Math.ceil(shuffled.length / 2);
+            const silverNames = shuffled.slice(0, silverCount);
+            const ceramicNames = shuffled.slice(silverCount);
+
+            // 分組
+            const silverResult = divideIntoGroups(silverNames, silverGroups);
+            const ceramicResult = divideIntoGroups(ceramicNames, ceramicGroups);
+
+            currentResults = {
+                silver: silverResult,
+                ceramic: ceramicResult,
+                totalPeople: names.length
+            };
+
+            displayResults();
+            document.getElementById('startBtn').disabled = false;
+            showSuccess('抽籤分組完成！');
+        }
+
+        function divideIntoGroups(names, groupCount) {
+            const groups = Array.from({ length: groupCount }, () => []);
+            names.forEach((name, index) => {
                 groups[index % groupCount].push(name);
             });
-            
-            return { groups };
+            return groups;
         }
-        
-        function displayResult(silverGroups, ceramicGroups) {
-            const resultDiv = document.getElementById('result');
-            const statsDiv = document.getElementById('stats');
-            const resultSection = document.getElementById('resultSection');
+
+        function displayResults() {
+            const resultEl = document.getElementById('result');
+            const statsEl = document.getElementById('stats');
+            const timestampEl = document.getElementById('timestamp');
+            const resultHeaderEl = document.getElementById('resultHeader');
+            const resultButtonsEl = document.getElementById('resultButtons');
             
-            resultDiv.innerHTML = '';
-            
-            // 顯示統計信息
-            statsDiv.innerHTML = `
+            resultEl.innerHTML = '';
+
+            // 統計
+            statsEl.innerHTML = `
                 <div class="stat-item">
                     <div class="stat-number">${currentResults.totalPeople}</div>
                     <div class="stat-label">總人數</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">${silverGroups.length}</div>
+                    <div class="stat-number">${currentResults.silver.length}</div>
                     <div class="stat-label">銀器組數</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">${ceramicGroups.length}</div>
+                    <div class="stat-number">${currentResults.ceramic.length}</div>
                     <div class="stat-label">瓷器組數</div>
                 </div>
             `;
-            
-            // 顯示銀器組
-            silverGroups.forEach((group, index) => {
-                const groupDiv = createGroupElement(`銀器組 ${index + 1}`, group, 'silver');
-                resultDiv.appendChild(groupDiv);
+
+            // 銀器組
+            currentResults.silver.forEach((group, index) => {
+                const groupEl = createGroupElement(`銀器組 ${index + 1}`, group, 'silver');
+                resultEl.appendChild(groupEl);
             });
-            
-            // 顯示瓷器組
-            ceramicGroups.forEach((group, index) => {
-                const groupDiv = createGroupElement(`瓷器組 ${index + 1}`, group, 'ceramic');
-                resultDiv.appendChild(groupDiv);
+
+            // 瓷器組
+            currentResults.ceramic.forEach((group, index) => {
+                const groupEl = createGroupElement(`瓷器組 ${index + 1}`, group, 'ceramic');
+                resultEl.appendChild(groupEl);
             });
-            
+
+            // 時間戳
+            const now = new Date();
+            timestampEl.innerHTML = `
+                <strong>🕒 抽籤時間：</strong>${now.toLocaleString('zh-TW')}<br>
+                <small>本次抽籤結果已自動記錄，確保公平透明</small>
+            `;
+
             // 顯示結果區域
-            resultSection.style.display = 'block';
+            document.getElementById('resultSection').style.display = 'block';
             
-            // 動畫顯示效果
-            const groupDivs = document.querySelectorAll('.group');
-            groupDivs.forEach((groupDiv, index) => {
+            // 滾動到結果
+            setTimeout(() => {
+                document.getElementById('resultSection').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 300);
+
+            // 開始動畫序列
+            startResultAnimation();
+        }
+
+        function startResultAnimation() {
+            const resultHeaderEl = document.getElementById('resultHeader');
+            const statItems = document.querySelectorAll('.stat-item');
+            const groups = document.querySelectorAll('.group');
+            const timestampEl = document.getElementById('timestamp');
+            const resultButtonsEl = document.getElementById('resultButtons');
+            const completionMessageEl = document.getElementById('completionMessage');
+
+            // 1. 標題出現
+            setTimeout(() => {
+                resultHeaderEl.classList.add('show');
+            }, 500);
+
+            // 2. 統計項目逐一出現
+            statItems.forEach((item, index) => {
                 setTimeout(() => {
-                    groupDiv.classList.add('visible');
-                }, index * 300);
+                    item.classList.add('show');
+                }, 1000 + index * 200);
+            });
+
+            // 3. 組別逐一出現
+            groups.forEach((group, index) => {
+                setTimeout(() => {
+                    group.classList.add('show');
+                    
+                    // 組內成員逐一出現
+                    const members = group.querySelectorAll('li');
+                    members.forEach((member, memberIndex) => {
+                        setTimeout(() => {
+                            member.classList.add('show');
+                        }, 400 + memberIndex * 200);
+                    });
+                }, 2000 + index * 800);
+            });
+
+            // 4. 時間戳出現
+            const totalDelay = 2000 + groups.length * 800 + 500;
+            setTimeout(() => {
+                timestampEl.classList.add('show');
+            }, totalDelay);
+
+            // 5. 按鈕出現
+            setTimeout(() => {
+                resultButtonsEl.classList.add('show');
+            }, totalDelay + 300);
+
+            // 6. 完成訊息出現
+            setTimeout(() => {
+                completionMessageEl.classList.add('show');
+            }, totalDelay + 600);
+
+            // 7. 最終滾動到頁面最底部
+            setTimeout(() => {
+                scrollToBottom();
+            }, totalDelay + 1000);
+        }
+
+        function scrollToBottom() {
+            // 平滑滾動到頁面最底部
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
             });
             
-            // 顯示時間戳
-            displayTimestamp();
-            
-            // 重新啟用按鈕
-            document.getElementById('groupButton').disabled = false;
-            
-            // 滾動到結果區域
+            // 也可以滾動到完成訊息
+            const completionMessage = document.getElementById('completionMessage');
             setTimeout(() => {
-                resultSection.scrollIntoView({ behavior: 'smooth' });
-            }, 1000);
+                completionMessage.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'end' 
+                });
+            }, 500);
         }
-        
+
         function createGroupElement(title, members, type) {
-            const groupDiv = document.createElement('div');
-            groupDiv.classList.add('group', type);
+            const div = document.createElement('div');
+            div.className = `group ${type}`;
             
-            const titleElement = document.createElement('h3');
-            titleElement.textContent = title;
-            groupDiv.appendChild(titleElement);
+            const h3 = document.createElement('h3');
+            h3.textContent = title;
+            div.appendChild(h3);
             
             const ul = document.createElement('ul');
-            members.forEach((name, index) => {
-                const li = document.createElement('li');
-                li.textContent = `${index + 1}. ${name}`;
-                ul.appendChild(li);
-            });
-            
             if (members.length === 0) {
                 const li = document.createElement('li');
                 li.textContent = '(此組暫無成員)';
                 li.style.fontStyle = 'italic';
-                li.style.color = '#6c757d';
+                li.style.color = '#999';
                 ul.appendChild(li);
+            } else {
+                members.forEach((name, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${index + 1}. ${name}`;
+                    ul.appendChild(li);
+                });
             }
             
-            groupDiv.appendChild(ul);
-            return groupDiv;
+            div.appendChild(ul);
+            return div;
         }
-        
-        function displayTimestamp() {
-            const timestampDiv = document.getElementById('timestamp');
-            const now = new Date();
-            const options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            };
-            const formattedTime = now.toLocaleString('zh-TW', options);
-            timestampDiv.innerHTML = `
-                <strong>🕒 抽籤時間：</strong>${formattedTime}<br>
-                <small>本次抽籤結果已自動記錄，確保公平透明</small>
-            `;
-        }
-        
-        function quickFill(names) {
-            document.getElementById('nameInput').value = names;
-            validateInput();
-            showSuccess('已填入範例名單！');
-        }
-        
-        function clearInput() {
-            document.getElementById('nameInput').value = '';
-            validateInput();
-        }
-        
+
         function resetLottery() {
-            if (confirm('確定要重新抽籤嗎？這將清除當前結果。')) {
+            if (confirm('確定要重新抽籤嗎？')) {
+                resetAnimations();
                 document.getElementById('resultSection').style.display = 'none';
                 document.getElementById('countdown').style.display = 'none';
-                document.getElementById('groupButton').disabled = false;
                 currentResults = null;
-                
-                // 滾動到頂部
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
-        
+
         function exportResults() {
             if (!currentResults) return;
             
             let text = `墨賞忠孝店盤點抽籤結果\n`;
-            text += `抽籤時間：${new Date().toLocaleString('zh-TW')}\n`;
+            text += `時間：${new Date().toLocaleString('zh-TW')}\n`;
             text += `總人數：${currentResults.totalPeople}人\n\n`;
             
             text += `🍴 銀器組：\n`;
@@ -733,12 +674,12 @@
             currentResults.ceramic.forEach((group, index) => {
                 text += `瓷器組 ${index + 1}：${group.join('、') || '(無成員)'}\n`;
             });
-            
-            // 複製到剪貼板
-            navigator.clipboard.writeText(text).then(() => {
-                showSuccess('結果已複製到剪貼板！');
-            }).catch(() => {
-                // 備用方法
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showSuccess('結果已複製到剪貼板！');
+                });
+            } else {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
                 document.body.appendChild(textarea);
@@ -746,18 +687,8 @@
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
                 showSuccess('結果已複製到剪貼板！');
-            });
-        }
-        
-        // 初始化
-        validateInput();
-        
-        // 鍵盤快捷鍵
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !document.getElementById('groupButton').disabled) {
-                startCountdown();
             }
-        });
+        }
     </script>
 </body>
 </html>
