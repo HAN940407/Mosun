@@ -625,6 +625,8 @@
             .result-section { padding: 15px; }
         }
     </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 </head>
 <body>
     <div class="container">
@@ -684,6 +686,7 @@
             <div id="result"></div>
             <div id="timestamp"></div>
             <div class="result-buttons" id="resultButtons">
+<button class="btn btn-secondary" onclick="captureScreenshot()">截圖結果</button>
                 <button class="btn btn-primary" onclick="resetLottery()">🔄 重新抽籤</button>
                 <button class="btn btn-secondary" onclick="exportResults()">📋 複製結果</button>
             </div>
@@ -1060,6 +1063,31 @@
                 showSuccess('結果已複製到剪貼板！');
             }
         }
+function captureScreenshot() {
+    const resultSection = document.getElementById('resultSection');
+    if (!resultSection) {
+        showError('無法找到結果區域，請先進行抽籤！');
+        return;
+    }
+
+    // 使用html2canvas捕捉
+    html2canvas(resultSection, {
+        scale: 2,  // 提高解析度（可調整為1如果圖片太大）
+        backgroundColor: '#ffffff',  // 確保背景為白色
+        useCORS: true  // 如果有外部資源，啟用CORS
+    }).then(canvas => {
+        // 轉成圖片並下載
+        const link = document.createElement('a');
+        link.download = `抽籤結果_${new Date().toLocaleString('zh-TW').replace(/[/:]/g, '-')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showSuccess('截圖已下載！');
+    }).catch(error => {
+        console.error('截圖失敗:', error);
+        showError('截圖失敗，請檢查瀏覽器權限或重試！');
+    });
+}
+
     </script>
 </body>
 </html>
