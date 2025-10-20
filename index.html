@@ -1069,6 +1069,17 @@ function captureScreenshot() {
         showError('無法找到結果區域，請先進行抽籤！');
         return;
     }
+function divideIntoGroups(names, groupCount) {
+    // 如果人數少於組數，自動調整組數
+    const actualGroupCount = Math.min(names.length, groupCount);
+    const groups = Array.from({ length: actualGroupCount }, () => []);
+    
+    names.forEach((name, index) => {
+        groups[index % actualGroupCount].push(name);
+    });
+    
+    return groups;
+}
 
     // 使用html2canvas捕捉
     html2canvas(resultSection, {
