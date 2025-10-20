@@ -810,45 +810,59 @@
             });
         }
 
-        function performLottery(names, silverGroups, ceramicGroups) {
-            // 洗牌
-            const shuffled = [...names];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-
-            // 分配人員
-            const silverCount = Math.ceil(shuffled.length / 2);
-            const silverNames = shuffled.slice(0, silverCount);
-            const ceramicNames = shuffled.slice(silverCount);
-
-            // 分組
-            const silverResult = divideIntoGroups(silverNames, silverGroups);
-            const ceramicResult = divideIntoGroups(ceramicNames, ceramicGroups);
-
-            currentResults = {
-                silver: silverResult,
-                ceramic: ceramicResult,
-                totalPeople: names.length
-            };
-
-            displayResults();
-            document.getElementById('startBtn').disabled = false;
-            showSuccess('抽籤分組完成！');
-        }
-
-       function divideIntoGroups(names, groupCount) {
-    // 如果人數少於組數，自動調整組數
-    const actualGroupCount = Math.min(names.length, groupCount);
-    const groups = Array.from({ length: actualGroupCount }, () => []);
+       function performLottery(names, silverGroups, ceramicGroups) {
+    const totalGroups = silverGroups + ceramicGroups;
     
-    names.forEach((name, index) => {
-        groups[index % actualGroupCount].push(name);
-    });
+    // ⭐ 檢查人數是否足夠
+    if (names.length < totalGroups) {
+        showError(`人數不足！總共需要至少 ${totalGroups} 人（銀器 ${silverGroups} 組 + 瓷器 ${ceramicGroups} 組），目前只有 ${names.length} 人。`);
+        document.getElementById('startBtn').disabled = false;
+        return;
+    }
+    
+    // 洗牌
+    const shuffled = [...names];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    // 根據組數比例分配人員
+    const silverCount = Math.round((silverGroups / totalGroups) * shuffled.length);
+    
+    const silverNames = shuffled.slice(0, silverCount);
+    const ceramicNames = shuffled.slice(silverCount);
+
+    // 分組（確保每組至少1人）
+    const silverResult = divideIntoGroupsEnsureOne(silverNames, silverGroups);
+    const ceramicResult = divideIntoGroupsEnsureOne(ceramicNames, ceramicGroups);
+
+    currentResults = {
+        silver: silverResult,
+        ceramic: ceramicResult,
+        totalPeople: names.length
+    };
+
+    displayResults();
+    document.getElementById('startBtn').disabled = false;
+    showSuccess('抽籤分組完成！');
+}
+function divideIntoGroupsEnsureOne(names, groupCount) {
+    const groups = Array.from({ length: groupCount }, () => []);
+    
+    // 第一輪：每組先分配 1 人
+    for (let i = 0; i < groupCount && i < names.length; i++) {
+        groups[i].push(names[i]);
+    }
+    
+    // 第二輪：剩餘的人輪流分配
+    for (let i = groupCount; i < names.length; i++) {
+        groups[i % groupCount].push(names[i]);
+    }
     
     return groups;
 }
+
 
 
         function displayResults() {
